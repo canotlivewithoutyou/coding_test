@@ -1,31 +1,31 @@
-def solution(l, r, goal, cnt):
-    c = (l+r)//2
-    cnt+=1
-    if c==goal:
-        return cnt
-    elif c<goal:
-        return solution(c, r, goal, cnt)
-    else:
-        return solution(l, c, goal, cnt)
-    
+def solution(l, r, goal):
+    cnt=0
+    c=0
+    while c!=goal:
+        c=(l+r)//2
+        cnt+=1
+        if goal==c:
+            return cnt
+        elif goal>c:
+            l=c
+        else:
+            r=c
+            
 
 T = int(input())
 
 for tc in range(1, T+1):
-    # 지우는 A, 한솔이는 B
-    # c = (l + r) / 2
-    
     P, Pa, Pb = map(int, input().split())
     
-    a_result = solution(1, P, Pa, 0)
-    b_result = solution(1, P, Pb, 0)
+    a_result=solution(1, P, Pa)
+    b_result=solution(1, P, Pb)
     
-    result=''
-    if a_result==b_result:
-        result+='0'
+    answer = ''
+    if a_result == b_result:
+        answer += '0'
     elif a_result<b_result:
-        result+='A'
+        answer+='A'
     else:
-        result+='B'
+        answer+='B'
         
-    print(f'#{tc} {result}')
+    print(f'#{tc} {answer}')
