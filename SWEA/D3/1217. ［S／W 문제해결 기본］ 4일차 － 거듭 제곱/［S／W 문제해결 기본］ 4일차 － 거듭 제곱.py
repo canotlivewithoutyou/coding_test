@@ -1,18 +1,14 @@
-def solution(a, cnt):
-    global result
+def solution(a,b):
+    if b==0:
+        return 1
     
-    if cnt == b:
-        return result
-    
-    result = result*a
-    
-    return solution(a, cnt+1)
+    return a*solution(a, b-1)
 
 for _ in range(10):
     tc = int(input())
     
     a, b = map(int, input().split())
     
-    result = 1
-    solution(a, 0)
+    result = solution(a,b)
+    
     print(f'#{tc} {result}')
