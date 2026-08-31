@@ -15,7 +15,7 @@ for tc in range(1, T+1):
             queue.append(number)
             number+=1
         
-        else:
+        elif k == 2:
             result.append(queue.popleft())
     
     print(f'#{tc}', *result)
