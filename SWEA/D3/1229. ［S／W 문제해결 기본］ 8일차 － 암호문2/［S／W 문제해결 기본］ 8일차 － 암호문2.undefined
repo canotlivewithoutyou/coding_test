@@ -1,0 +1,46 @@
+def I(x, y, s):
+    # 1. I(삽입) x, y, s : 앞에서부터 x의 위치 바로 다음에 y개의 숫자를 삽입한다. 
+    # s는 덧붙일 숫자들이다.[ ex) I 3 2 123152 487651 ]
+    for k in range(y):
+        original.insert(x+k, s[k])
+    
+def D(x, y):
+    # 2. D(삭제) x, y : 앞에서부터 x의 위치 바로 다음부터 y개의 숫자를 삭제한다.[ ex) D 4 4 ]
+    del original[x: x+y]
+    
+for tc in range(1, 11):
+    
+    N = int(input())
+    
+    #원본 암호문
+    original = list(map(int, input().split()))
+      
+    #명령어의 개수
+    num=int(input())
+    
+    #명령어
+    inpt = list(input().split())
+        
+    i = 0
+    
+    while i < len(inpt):
+        if inpt[i] == "I":
+            x= int(inpt[i+1])
+            y = int(inpt[i+2])
+            nums = []
+            for t in range(1, y+1):
+                nums.append(int(inpt[i+2+t]))
+            
+            I(x, y, nums)
+            
+            i += 3+len(nums)
+            
+        elif inpt[i] == "D":
+            x = int(inpt[i+1])
+            y = int(inpt[i+2])
+            
+            D(x, y)
+            
+            i+=3
+           
+    print(f'#{tc}', *original[:10])
