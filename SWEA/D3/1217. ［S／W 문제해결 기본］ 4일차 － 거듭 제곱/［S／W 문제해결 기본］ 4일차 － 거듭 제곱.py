@@ -1,14 +1,8 @@
-def solution(a,b):
-    if b==0:
-        return 1
-    
-    return a*solution(a, b-1)
-
-for _ in range(10):
+for _ in range(1, 11):
     tc = int(input())
-    
-    a, b = map(int, input().split())
-    
-    result = solution(a,b)
-    
+    N, M = map(int, input().split())
+    result=1
+    for _ in range(M):
+        result=result*N
+            
     print(f'#{tc} {result}')
