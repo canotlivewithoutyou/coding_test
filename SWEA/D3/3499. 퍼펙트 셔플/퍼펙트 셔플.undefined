@@ -1,0 +1,28 @@
+T = int(input())
+
+for tc in range(1, T+1):
+    N = int(input())
+    
+    inpt = list(input().split())
+    
+    k = N//2
+    i = 0 
+    result = []
+    
+    if N%2==0:
+        top = inpt[:k]
+        bottom = inpt[k:]
+        while i<len(top):
+            result.append(top[i])
+            result.append(bottom[i])
+            i+=1
+    else:
+        top = inpt[:k+1]
+        bottom = inpt[k+1:]
+        while i<len(bottom):
+            result.append(top[i])
+            result.append(bottom[i])
+            i+=1
+        result.append(top[i])
+    
+    print(f'#{tc}', *result)
