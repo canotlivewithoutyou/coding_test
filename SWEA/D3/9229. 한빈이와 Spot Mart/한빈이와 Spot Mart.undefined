@@ -1,0 +1,61 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+
+        // N개의 과자봉지, a그램의 무게
+        // 제한 무게 M
+
+        // 투 포인터 사용
+        // sum -> result로 저장
+        // sum이 result보다 크지만, 제한무게 M보다 작다면 result 업데이트
+
+        Scanner sc = new Scanner(System.in);
+
+        int T = sc.nextInt();
+
+        for (int tc = 1; tc <= T; tc++) {
+
+            int N = sc.nextInt();
+            int M = sc.nextInt();
+
+            int[] gram = new int[N];
+
+            for (int i = 0; i < N; i++) {
+                gram[i] = sc.nextInt();
+            }
+
+            // l: left / r: right / ans: 현재 두 과자의 무게 합
+            int l = 0;
+            int r = N - 1;
+            int ans = 0;
+
+            // 최종 답
+            int result = -1;
+
+            Arrays.sort(gram);
+
+            while (l < r) {
+
+                ans = gram[l] + gram[r];
+
+                if (ans <= M) {
+                    result = Math.max(ans, result);
+                }
+
+                if (ans == M) {
+                    break;
+                } else if (ans > M) {
+                    r--;
+                } else if (ans < M) {
+                    l++;
+                }
+            }
+
+            System.out.println("#" + tc + " " + result);
+        }
+
+        sc.close();
+    }
+}
