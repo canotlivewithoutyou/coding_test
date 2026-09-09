@@ -1,0 +1,54 @@
+T = int(input())
+
+for tc in range(1, T+1):
+    N, M = map(int, input().split())
+    
+    # 같이 넣으면 안되는 재료 체크
+    # bad[a][b] == True면 a, b는 같이 못씀
+    bad = [[False] * (N+1) for _ in range(N+1)]
+    
+    for _ in range(M):
+        a, b = map(int, input().split())
+        bad[a][b] = True
+        bad[b][a] = True
+    
+    selected = []   # 지금 버거에 들어간 재료
+    result = 0
+    
+    
+    def dfs(idx):
+        global result
+        
+        # 1번부터 N번까지 재료를 전부 확인했다면
+        if idx == N+1:
+            result += 1
+            return
+        
+        
+        # 1. 현재 재료를 안 넣는 경우
+        dfs(idx + 1)
+        
+        
+        # 2. 현재 재료를 넣는 경우
+        
+        # 지금까지 넣은 재료랑 궁합이 안맞는게 있는지 확인
+        possible = True
+        
+        for ingredient in selected:
+            if bad[idx][ingredient]:
+                possible = False
+                break
+        
+        # 문제 없으면 넣어보기
+        if possible:
+            selected.append(idx)
+            
+            dfs(idx + 1)
+            
+            # 다음 경우도 봐야하니까 원상복구
+            selected.pop()
+    
+    
+    dfs(1)
+    
+    print(f'#{tc} {result}')
