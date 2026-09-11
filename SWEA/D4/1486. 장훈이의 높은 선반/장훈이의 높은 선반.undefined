@@ -1,0 +1,29 @@
+T = int(input())
+
+for tc in range(1, T + 1):
+    N, B = map(int, input().split())
+    height = list(map(int, input().split()))
+
+    result = sum(height)
+
+    def dfs(idx, total):
+        global result
+
+        # B 이상이면 답 후보
+        if total >= B:
+            result = min(result, total)
+            return
+
+        # 점원을 전부 확인했다면 끝
+        if idx == N:
+            return
+
+        # 현재 점원을 선택
+        dfs(idx + 1, total + height[idx])
+
+        # 현재 점원을 선택하지 않음
+        dfs(idx + 1, total)
+
+    dfs(0, 0)
+
+    print(f'#{tc} {result - B}')
