@@ -1,24 +1,26 @@
-def dfs(idx, depth):
-    global result
+from collections import deque
 
-    # 최단거리를 구하는 것이므로 가지치기
-    if depth > result:
-        return 
+def bfs(start):
+    q = deque()
 
-    # idx = Goal 이라면 return
-    if idx == G:
-        result = min(result, depth)
+    q.append(start)
 
-    # 방문 체크
-    visited[idx] = True
+    visited[start]=True
+    distance[start]=0
 
-    for next_node in node[idx]:
-        # 아직 방문하지 않았다면
-        if not visited[next_node]:
-            dfs(next_node, depth+1)
-            # 방문 체크 해제
-            visited[next_node] = False
+    while q:
+        current = q.popleft()
 
+        if current==G:
+            return distance[current]
+
+        for next_node in node[current]:
+            if not visited[next_node]:
+                visited[next_node] = True
+                distance[next_node] = distance[current]+1
+                q.append(next_node)
+
+    return 0
 
 T = int(input())
 
@@ -39,11 +41,8 @@ for tc in range(1, T+1):
     # 방문 배열 체크 
     visited = [False]*(V+1)
 
-    result = 10000
+    distance = [0] * (V+1)
 
-    dfs(S, 0)
+    result = bfs(S)
 
-    if result == 10000:
-        result=0
-        
     print(f"#{tc} {result}")
