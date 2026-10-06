@@ -3,16 +3,14 @@ N = int(input())
 nums = [input() for _ in range(N)]
 
 def solution(a, b, c):
-    s_a= a[::-1]
-    s_b= b[::-1]
-    s_c= c[::-1]
+    max_len= max(len(a), len(b), len(c))
 
-    for i in range(max(len(a), len(b), len(c))):
-        n_a = int(s_a[i]) if i<len(s_a) else 0
-        n_b = int(s_b[i]) if i<len(s_b) else 0
-        n_c = int(s_c[i]) if i<len(s_c) else 0
+    a = a.zfill(max_len)
+    b = b.zfill(max_len)
+    c = c.zfill(max_len)
 
-        if n_a + n_b + n_c >= 10:
+    for i in range(max_len):
+        if int(a[i])+int(b[i])+int(c[i]) >= 10:
             return -1
 
     return int(a)+int(b)+int(c)
