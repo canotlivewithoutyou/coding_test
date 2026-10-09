@@ -17,14 +17,17 @@ for roc, alpha in inpt:
     elif alpha == 'H':
         rocation[roc] = 2
 
-result = 0
+current = sum(rocation[1:K+2])
+result = current
 
-if max_xi<=K:
-    result = sum(rocation)
+for right in range(K+2, max_xi+1):
+    # 왼쪽 값 하나 빼기
+    current -= rocation[right-K-1]
 
-for k in range(1, max_xi-K+1):
-    current = sum(rocation[k: k+K+1])
-    result = max(current, result)
+    # 오른쪽 값 하나 빼기
+    current += rocation[right]
+
+    # result 갱신
+    result = max(result, current)
 
 print(result)
-
