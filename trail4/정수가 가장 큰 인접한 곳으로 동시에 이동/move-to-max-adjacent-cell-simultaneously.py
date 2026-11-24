@@ -1,3 +1,5 @@
+from collections import Counter
+
 N, M, T = map(int, input().split())
 maze = [list(map(int, input().split())) for _ in range(N)]
 
@@ -28,15 +30,10 @@ def move(r,c):
 
 for _ in range(T):
 
-    # 일단 살아있는 구슬을 전부 움직이고
-    move_location = []
-    for r, c in ori_location:
-        move_location.append(move(r, c))
-
-    # 혼자 도착한 구슬만 다음 턴으로 넘겨서 
-    ori_location = []
-    for row in move_location:
-        if move_location.count(row)==1:
-            ori_location.append(row)
+    # 각 좌표에 구슬이 몇 개 도착?
+    arrivals = Counter(move(r, c) for r, c in ori_location)
+    
+    # 구슬이 딱 1개 도착한 좌표만 다음 턴으로 넘기기
+    ori_location = [pos for pos, cnt in arrivals.items() if cnt==1]
     
 print(len(ori_location))
