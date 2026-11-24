@@ -1,23 +1,15 @@
 K, N = map(int, input().split())
-
-nums=[]
-
-def result():
-    for num in nums:
-        print(num, end=' ')
-    print()
+answer = []
 
 def solution(cnt):
 
     if cnt == N:
-        result()
+        print(*answer)
         return 
 
     for i in range(1, K+1):
-        nums.append(i)
+        answer.append(i)
         solution(cnt+1)
-        nums.pop()
+        answer.pop()
 
 solution(0)
-
-
