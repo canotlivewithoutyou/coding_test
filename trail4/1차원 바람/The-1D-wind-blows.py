@@ -1,65 +1,47 @@
 N, M, Q = map(int, input().split())
 maze = [list(map(int, input().split())) for _ in range(N)]
 
+
 # 행 이동
-def shift(row, direction):
-    # 왼쪽에서 바람 -> 오른쪽 이동
-    if direction == 'L':
-        temp = row[-1]
-        for i in range(M-1, 0, -1):
-            row[i] = row[i-1]
-        row[0] = temp
+def shift(row, d):
+    if d == 'L':
+        return row[-1:] + row[:-1]
+    return row[1:] + row[:1]
 
-    # 오른쪽에서 바람 -> 왼쪽 이동
-    elif direction == 'R':
-        temp = row[0]
-        for i in range(M-1):
-            row[i] = row[i+1]
-        row[-1] = temp
-
-    return row
-
-# -----
 
 # 반대 방향 반환
-def dire(direction):
-    if direction == 'L':
-        return 'R'
-    elif direction == 'R':
-        return 'L'
+def reverse(d):
+    return 'R' if d == 'L' else 'L'
 
-# -----
+
+# 인접한 두 행의 같은 열에 동일한 숫자가 있는지 확인
+def can_spread(row1, row2):
+    return any(a == b for a, b in zip(row1, row2))
+
+
+# 바람 전파
+def spread(r, d, step):
+    nr = r + step
+
+    while 0 <= nr < N:
+        if not can_spread(maze[r], maze[nr]):
+            break
+
+        d = reverse(d)
+        maze[nr] = shift(maze[nr], d)
+
+        r = nr
+        nr += step
+
 
 for _ in range(Q):
     r, d = input().split()
     r = int(r) - 1
 
-    # 최초 바람이 불어오는 행 이동
     maze[r] = shift(maze[r], d)
 
-    # 위쪽으로 전파
-    direction = d
-
-    for row in range(r, 0, -1):
-        for i in range(M):
-            if maze[row][i] == maze[row-1][i]:
-                direction = dire(direction)
-                maze[row-1] = shift(maze[row-1], direction)
-                break
-        else:
-            break
-
-    # 아래쪽으로 전파
-    direction = d
-
-    for row in range(r, N-1):
-        for i in range(M):
-            if maze[row][i] == maze[row+1][i]:
-                direction = dire(direction)
-                maze[row+1] = shift(maze[row+1], direction)
-                break
-        else:
-            break
+    spread(r, d, -1)  # 위쪽 전파
+    spread(r, d, 1)   # 아래쪽 전파
 
 
 for row in maze:
